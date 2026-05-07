@@ -92,9 +92,10 @@ Alternative key injection:
 
 ## UI screenshots
 
-![Home](docs/screenshots/home.png)
-![User Center](docs/screenshots/user-center.png)
-![Add Menu](docs/screenshots/add-menu.png)
+| Home | User Center | Add Menu |
+| --- | --- | --- |
+| <img src="docs/screenshots/home.png" alt="Home screen" width="280"/> | <img src="docs/screenshots/user-center.png" alt="User Center screen" width="280"/> | <img src="docs/screenshots/add-menu.png" alt="Add menu screen" width="280"/> |
+| **Caption:** Main reminders dashboard with schedule groups and date picker. | **Caption:** Profile hub with plan/medication/follow-up access and settings. | **Caption:** Center dock add action with quick entry choices. |
 
 ## Demo video
 
