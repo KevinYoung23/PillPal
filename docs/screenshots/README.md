@@ -1,9 +1,7 @@
 # UI Screenshots
 
-Place UI screenshots here using these exact filenames:
+Current README uses:
 
 - `home.png`
-- `redaction.png`
-- `upload-preview.png`
-
-The main project `README.md` references these files.
+- `user-center.png`
+- `add-menu.png`

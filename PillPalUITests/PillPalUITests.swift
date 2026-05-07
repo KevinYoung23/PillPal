@@ -38,4 +38,59 @@ final class PillPalUITests: XCTestCase {
             XCUIApplication().launch()
         }
     }
+
+    @MainActor
+    func testCaptureMarketingScreenshots() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 8))
+        sleep(2)
+        saveScreenshot(from: app, named: "home")
+
+        let userTab = app.buttons["User"]
+        if userTab.waitForExistence(timeout: 5) {
+            userTab.tap()
+            sleep(1)
+            saveScreenshot(from: app, named: "user-center")
+        }
+
+        let remindersTab = app.buttons["Reminders"]
+        if remindersTab.waitForExistence(timeout: 5) {
+            remindersTab.tap()
+            sleep(1)
+        }
+
+        let addButtonCandidates = app.buttons.matching(
+            NSPredicate(format: "label == %@ OR identifier == %@ OR label == %@", "plus", "plus", "+")
+        )
+        if addButtonCandidates.firstMatch.waitForExistence(timeout: 5) {
+            addButtonCandidates.firstMatch.tap()
+            sleep(1)
+            saveScreenshot(from: app, named: "add-menu")
+        }
+    }
+
+    private func saveScreenshot(from app: XCUIApplication, named name: String) {
+        let screenshot = app.screenshot()
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
+
+        guard let outputDir = ProcessInfo.processInfo.environment["SCREENSHOT_DIR"] else {
+            return
+        }
+        let fileURL = URL(fileURLWithPath: outputDir, isDirectory: true)
+            .appendingPathComponent("\(name).png")
+        do {
+            try FileManager.default.createDirectory(
+                at: fileURL.deletingLastPathComponent(),
+                withIntermediateDirectories: true
+            )
+            try screenshot.pngRepresentation.write(to: fileURL)
+        } catch {
+            XCTFail("Failed to save screenshot \(name): \(error.localizedDescription)")
+        }
+    }
 }

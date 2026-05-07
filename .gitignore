@@ -4,6 +4,7 @@
 DerivedData/
 build/
 BuildData/
+BuildDataSim/
 *.xccheckout
 *.xcscmblueprint
 *.moved-aside

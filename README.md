@@ -92,17 +92,15 @@ Alternative key injection:
 
 ## UI screenshots
 
-Add current screenshots in `docs/screenshots/` and keep these names:
-
-- `docs/screenshots/home.png`
-- `docs/screenshots/redaction.png`
-- `docs/screenshots/upload-preview.png`
-
-Then they will render below:
-
 ![Home](docs/screenshots/home.png)
-![Privacy Redaction](docs/screenshots/redaction.png)
-![Upload Preview](docs/screenshots/upload-preview.png)
+![User Center](docs/screenshots/user-center.png)
+![Add Menu](docs/screenshots/add-menu.png)
+
+## Demo video
+
+- Quick demo video: [`docs/videos/pillpal-demo.mov`](docs/videos/pillpal-demo.mov)
+
+<video src="docs/videos/pillpal-demo.mov" controls width="320"></video>
 
 ## Notes
 
