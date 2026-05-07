@@ -78,6 +78,12 @@ final class PillPalUITests: XCTestCase {
         app.launch()
 
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 8))
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        XCUIDevice.shared.press(.home)
+        XCTAssertTrue(waitForPillPalIconReady(on: springboard, timeout: 20))
+        sleep(1)
+        springboard.icons["PillPal"].tap()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 8))
         sleep(1)
 
         tap(app.buttons["dock.add.button"], timeout: 8)
@@ -123,6 +129,19 @@ final class PillPalUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Today"].waitForExistence(timeout: 12))
     }
 
+    @MainActor
+    func testPrepareDemoHomeScreen() throws {
+        let app = XCUIApplication()
+        app.launchEnvironment["PILLPAL_DEMO_LLM"] = "1"
+        app.launch()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 8))
+
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        XCUIDevice.shared.press(.home)
+        XCTAssertTrue(waitForPillPalIconReady(on: springboard, timeout: 20))
+        sleep(1)
+    }
+
     private func saveScreenshot(from app: XCUIApplication, named name: String) {
         let screenshot = app.screenshot()
         let attachment = XCTAttachment(screenshot: screenshot)
@@ -161,5 +180,40 @@ final class PillPalUITests: XCTestCase {
                 break
             }
         }
+    }
+
+    private func waitForPillPalIconReady(on springboard: XCUIApplication, timeout: TimeInterval) -> Bool {
+        let deadline = Date().addingTimeInterval(timeout)
+        let icon = springboard.icons["PillPal"]
+        let installingIcon = springboard.icons.matching(NSPredicate(format: "label CONTAINS[c] %@", "Installing")).firstMatch
+
+        if icon.exists && icon.isHittable && !installingIcon.exists {
+            return true
+        }
+
+        for _ in 0..<5 {
+            if Date() >= deadline { break }
+            springboard.swipeRight()
+            if icon.exists && icon.isHittable && !installingIcon.exists {
+                return true
+            }
+        }
+
+        for _ in 0..<12 {
+            if Date() >= deadline { break }
+            springboard.swipeLeft()
+            if icon.exists && icon.isHittable && !installingIcon.exists {
+                return true
+            }
+        }
+
+        while Date() < deadline {
+            if icon.exists && icon.isHittable && !installingIcon.exists {
+                return true
+            }
+            usleep(200_000)
+        }
+
+        return icon.exists && icon.isHittable && !installingIcon.exists
     }
 }
