@@ -70,6 +70,7 @@ struct ConfirmCreateRemindersView: View {
                 if case .finished = state {
                     Button("Done", action: onFinish)
                         .buttonStyle(.borderedProminent)
+                        .accessibilityIdentifier("confirm.done")
                 } else {
                     Button("Back", action: onBack)
                         .buttonStyle(.bordered)
@@ -82,6 +83,7 @@ struct ConfirmCreateRemindersView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(isScheduling)
+                    .accessibilityIdentifier("confirm.createReminders")
                 }
             }
             .padding(.horizontal, 20)

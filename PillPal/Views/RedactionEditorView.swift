@@ -180,6 +180,7 @@ struct RedactionEditorView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .accessibilityIdentifier("redaction.runOCR")
             }
         }
         .padding(12)

@@ -156,6 +156,7 @@ final class LLMService {
 
     private static let defaultDeepSeekEndpoint = URL(string: "https://api.deepseek.com/chat/completions")!
     private static let fallbackModel = "deepseek-chat"
+    private static let demoModeEnabled = ProcessInfo.processInfo.environment["PILLPAL_DEMO_LLM"] == "1"
 
     init(configuration: Configuration = .load(), session: URLSession = .shared) {
         self.configuration = configuration
@@ -163,15 +164,22 @@ final class LLMService {
     }
 
     var isConfigured: Bool {
-        normalizedAPIKey != nil
+        Self.demoModeEnabled || normalizedAPIKey != nil
     }
 
     var endpointHost: String {
+        if Self.demoModeEnabled {
+            return "demo-local"
+        }
         let endpoint = configuration.endpointURL ?? Self.defaultDeepSeekEndpoint
         return endpoint.host ?? endpoint.absoluteString
     }
 
     func extract(ocrText: String, redactedImages: [UIImage]) async throws -> LLMExtractionResult {
+        if Self.demoModeEnabled {
+            return Self.mockExtractionResult
+        }
+
         guard let apiKey = normalizedAPIKey else {
             throw ExtractionError.apiKeyMissing
         }
@@ -399,4 +407,47 @@ final class LLMService {
     - Never hallucinate unsupported details; use \"unknown\" plus uncertainties when evidence is insufficient.
     - If you are unsure about any required field, still output the full JSON with \"unknown\" and add an uncertainty entry.
     """
+
+    private static var mockExtractionResult: LLMExtractionResult {
+        let calendar = Calendar.current
+        let startDate = calendar.startOfDay(for: Date())
+        let endDate = calendar.date(byAdding: .day, value: 6, to: startDate) ?? startDate
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd"
+
+        return LLMExtractionResult(
+            medications: [
+                LLMMedication(
+                    name: "Amoxicillin",
+                    dose: "500 mg",
+                    route: .oral,
+                    frequency: MedicationFrequency(type: .timesPerDay, value: 3),
+                    times: ["08:00", "13:00", "20:00"],
+                    startDate: formatter.string(from: startDate),
+                    endDate: formatter.string(from: endDate),
+                    withFood: .afterMeal,
+                    notes: ["Demo extracted result"],
+                    storage: [.roomTemp]
+                ),
+                LLMMedication(
+                    name: "Eye drops",
+                    dose: "1 drop",
+                    route: .eye,
+                    frequency: MedicationFrequency(type: .timesPerDay, value: 2),
+                    times: ["08:00", "20:00"],
+                    startDate: formatter.string(from: startDate),
+                    endDate: formatter.string(from: endDate),
+                    withFood: .noRequirement,
+                    notes: ["Demo extracted result"],
+                    storage: [.avoidLight]
+                )
+            ],
+            followUp: [
+                LLMFollowUp(date: formatter.string(from: endDate), notes: "Review progress with doctor")
+            ],
+            uncertainties: []
+        )
+    }
 }

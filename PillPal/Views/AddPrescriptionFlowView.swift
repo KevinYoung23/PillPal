@@ -157,6 +157,7 @@ struct AddPrescriptionFlowView: View {
                 .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 16))
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("flow.entry.scan")
 
             Button {
                 inputMode = .manual
@@ -179,6 +180,7 @@ struct AddPrescriptionFlowView: View {
                 .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 16))
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("flow.entry.manual")
 
             Spacer()
 

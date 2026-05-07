@@ -72,6 +72,7 @@ struct DocumentScannerView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
+                .accessibilityIdentifier("scan.useDemoPages")
 
                 Button {
                     onScanned(images)
@@ -81,6 +82,7 @@ struct DocumentScannerView: View {
                 }
                 .buttonStyle(.bordered)
                 .disabled(images.isEmpty)
+                .accessibilityIdentifier("scan.continueToRedaction")
 
                 Button("Cancel", role: .cancel, action: onCancel)
                     .font(.footnote)

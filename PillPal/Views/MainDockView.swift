@@ -96,6 +96,7 @@ struct MainDockView: View {
                         .background(.ultraThinMaterial, in: Capsule())
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("dock.add.option.newPlan")
 
                 Button {
                     withAnimation(.spring(response: 0.28, dampingFraction: 0.9)) {
@@ -110,6 +111,7 @@ struct MainDockView: View {
                         .background(.ultraThinMaterial, in: Capsule())
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("dock.add.option.addPrescription")
             }
             .padding(.bottom, 108)
             .padding(.horizontal, 24)
@@ -170,6 +172,7 @@ struct MainDockView: View {
             }
             .buttonStyle(.plain)
             .offset(y: -28)
+            .accessibilityIdentifier("dock.add.button")
         }
     }
 

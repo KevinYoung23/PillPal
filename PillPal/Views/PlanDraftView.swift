@@ -263,6 +263,7 @@ struct PlanDraftView: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(buildPlan() == nil)
+            .accessibilityIdentifier("draft.continue")
         }
     }
 

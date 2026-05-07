@@ -101,6 +101,7 @@ Alternative key injection:
 
 ![PillPal Demo](docs/videos/pillpal-demo.gif)
 
+- Full pipeline demo (open app → demo scan pages → redaction → OCR → draft → create reminders).
 - Full quality MP4: [`docs/videos/pillpal-demo.mp4`](docs/videos/pillpal-demo.mp4)
 
 ## Notes

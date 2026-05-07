@@ -67,6 +67,7 @@ struct UploadPreviewView: View {
                         .font(.footnote)
                 }
                 .toggleStyle(.switch)
+                .accessibilityIdentifier("upload.consentToggle")
 
                 if isLoading {
                     loadingCard
@@ -175,6 +176,7 @@ struct UploadPreviewView: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(!userConsent || isLoading || !llmService.isConfigured)
+            .accessibilityIdentifier("upload.generateDraft")
         }
         .padding(.horizontal, 20)
         .padding(.top, 10)
