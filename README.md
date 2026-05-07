@@ -99,8 +99,9 @@ Alternative key injection:
 
 ## Demo video
 
-- Quick demo video (MP4): [`docs/videos/pillpal-demo.mp4`](docs/videos/pillpal-demo.mp4)
-- Fallback MOV: [`docs/videos/pillpal-demo.mov`](docs/videos/pillpal-demo.mov)
+![PillPal Demo](docs/videos/pillpal-demo.gif)
+
+- Full quality MP4: [`docs/videos/pillpal-demo.mp4`](docs/videos/pillpal-demo.mp4)
 
 ## Notes
 
