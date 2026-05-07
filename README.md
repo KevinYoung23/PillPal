@@ -2,6 +2,12 @@
 
 PillPal is a privacy-first SwiftUI medication assistant that turns prescription images into structured medication plans and local reminders.
 
+## Framework Overview
+
+<p align="center">
+  <img src="docs/Framework/framework.png" alt="PillPal framework overview" width="900"/>
+</p>
+
 ## What it does (MVP)
 
 - Multi-page prescription scan using `VisionKit` (`VNDocumentCameraViewController`)
